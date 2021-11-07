@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pynigma"
+version = "0.1.0"
+description = "Python implementation of the enigma machine."
+authors = ["Gonzalo Abril, Luis Javier Soriano"]
+license = "GPL v3.0"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
