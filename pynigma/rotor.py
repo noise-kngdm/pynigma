@@ -32,7 +32,7 @@ class Rotor(Base):
             if keys[i] == values[i]:
                 raise ValueError('Key and value cannot be equal')
 
-    def __init__(self, ringstellung, grundstellung, notch, permutations):
+    def __init__(self, ringstellung, notch, permutations):
         """
             Constructor of the Rotor class.
 
@@ -40,8 +40,6 @@ class Rotor(Base):
             ----------
             ringstellung : int
                 Number that equals to a letter that configure the rotor's ring
-            grundstellung : int
-                Number that equals to a letter that is configure to be the initial letter of the rotor
             notch : int
                 Number which his function is to indicate to his left rotor to do a rotation
             permutations : list[tuple[int, int]]
@@ -68,9 +66,6 @@ class Rotor(Base):
     
         self._check_valid_number(notch)
         self._notch = notch
-
-        self._check_valid_number(grundstellung)
-        self._grundstellung = grundstellung
 
     def _set_key(self, x: int, y: int):
         """
