@@ -79,17 +79,3 @@ class Rotor(Base):
             A number.
         """
         self._permutations[x] = y
-
-def num_of(cad):
-        return ord(cad)-ord('A') + 1
-
-if __name__ == '__main__':
-
-    k = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    l = "ZYXWVUTSRQPONMLKJIHGFEDCBA"
-
-    lista = [(num_of(k[i]),num_of(l[i])) for i in range(constants.MAX_NUM)]
-            
-    print(lista)
-
-    rotor_1 = Rotor(10,10,10,lista)
