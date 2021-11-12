@@ -67,6 +67,8 @@ class Rotor(Base):
         self._check_valid_number(notch)
         self._notch = notch
 
+        self._set_offset()
+
     def _set_key(self, x: int, y: int):
         """
         Set the values on _permutations.
@@ -79,3 +81,14 @@ class Rotor(Base):
             A number.
         """
         self._permutations[x] = y
+
+    def _set_offset(self):
+        """
+        Set the offset in the rotor's ring.
+        """
+        temp_copy = self._permutations.copy()
+        for i in range(constants.MIN_NUM, constants.MAX_NUM + 1):
+            new_pos = (i+self._ringstellung)%constants.MAX_NUM
+            if new_pos == 0:
+                new_pos = new_pos + 1
+            self._permutations[i] = temp_copy[new_pos]
