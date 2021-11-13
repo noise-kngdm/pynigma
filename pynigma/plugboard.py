@@ -1,36 +1,15 @@
 import sys
 import constants
 from collections import Counter
+from base_enigma import Base
 
-
-class PlugBoard():
+class PlugBoard(Base):
     """
     Module that represents the PlugBoard or Steckerbrett.
     """
-    def _check_valid_number(self, num: int):
-        """
-        Checks that the number passed as a parameter is a valid one.
+    NUM_PERMUTATIONS = constants.MAX_NUM_PAIRS_PLUGBOARD
 
-        Parameters
-        ----------
-        num : int
-            Number that will be checked.
-
-        Raises
-        ------
-        ValueError
-            If the number is not in the expected range.
-        """
-        if num < constants.MIN_NUM or num > constants.MAX_NUM:
-            raise ValueError(f'The value of {num} must be between '
-                             f'{constants.MIN_NUM} and {constants.MAX_NUM}')
-
-    def _check_once_in_list(self, keys):
-        occurences = Counter(keys)
-        if occurences.most_common(1)[0][1] > 1:
-            raise ValueError('You can only use each character once')
-
-    def _check_non_double_keys(self, keys, values):
+    def _check_keys_and_values(self, keys, values):
         """
         Check that no key was used twice, either as a key or as a value.
 
@@ -46,13 +25,13 @@ class PlugBoard():
         ValueError
             If a number was used more than once.
         """
-        self._check_once_in_list(keys)
-        self._check_once_in_list(values)
+        super()._check_keys_and_values(keys, values)
 
         for x in keys:
             if x in values:
                 raise ValueError('You can only use each character once for '
                                  'each permutation')
+                                 
 
     def __init__(self, pairs: list[tuple[int, int]]):
         """
@@ -60,7 +39,7 @@ class PlugBoard():
 
         Parameters
         ----------
-        pairs : list[tuple[int]]
+        pairs : list[tuple[int, int]]
             A list with up to 10 tuples of numbers between in the [1-26] range.
 
         Raises
@@ -70,40 +49,29 @@ class PlugBoard():
         ValueError
             If a number is not in the expected range.
         """
+        super().__init__(pairs)
+
         if len(pairs) > constants.MAX_NUM_PAIRS_PLUGBOARD:
             raise TypeError('The max number of pairs that can be passed to'
                             f'{sys._getframe(1).f_code.co_name} is '
                             f'{constants.MAX_NUM_PAIRS_PLUGBOARD}')
-
-        if len(pairs) > 0:
-            self._check_non_double_keys([x[0] for x in pairs],
-                                        [x[1] for x in pairs])
-
-        self._permutations = {x: x for x in range(constants.MIN_NUM,
-                                                  constants.MAX_NUM + 1)}
-        for x, y in pairs:
+        
+    def _set_map(self, permutations: list[tuple[int, int]]):
+        for x, y in permutations:
             self._check_valid_number(x)
-            self._check_valid_number(y)
-            self._permutations[x] = y
-            self._permutations[y] = x
-
-    def cipher(self, num: int):
+            self._check_valid_number(y)                                        
+            self._set_key(x,y)    
+        
+    def _set_key(self, x: int, y: int):
         """
-        Returns the parameter ciphered.
+        Set the values on _permutations.
 
         Parameters
         ----------
-        num : int
-            The ordinal corresponding to the character that should be ciphered.
-
-        Returns
-        -------
-        int
-            The ordinal corresponding to the ciphered parameter.
+        x : int
+            A number.
+        y : int
+            A number.
         """
-        try:
-            return self._permutations[num]
-        except KeyError as e:
-            raise KeyError('The value introduced is not valid, please, use '
-                           f'a character between {constants.MIN_CHAR} and '
-                           f'{constants.MAX_CHAR}') from e
+        self._permutations[x] = y
+        self._permutations[y] = x

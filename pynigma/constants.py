@@ -1,5 +1,7 @@
-MIN_NUM = 1
-MAX_NUM = 26
-MIN_CHAR = chr(ord('A') + MIN_NUM - 1)
-MAX_CHAR = chr(ord('A') + MAX_NUM - 1)
+MIN_NUM = 0
+MAX_NUM = 25
+NUM_CHARS = 26
+MIN_CHAR = 'A'
+MAX_CHAR = 'Z'
 MAX_NUM_PAIRS_PLUGBOARD = 10
+
