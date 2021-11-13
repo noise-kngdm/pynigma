@@ -1,7 +1,7 @@
 import sys
 import constants
-from collections import Counter
 from base_enigma import Base
+
 
 class PlugBoard(Base):
     """
@@ -31,7 +31,6 @@ class PlugBoard(Base):
             if x in values:
                 raise ValueError('You can only use each character once for '
                                  'each permutation')
-                                 
 
     def __init__(self, pairs: list[tuple[int, int]]):
         """
@@ -55,13 +54,13 @@ class PlugBoard(Base):
             raise TypeError('The max number of pairs that can be passed to'
                             f'{sys._getframe(1).f_code.co_name} is '
                             f'{constants.MAX_NUM_PAIRS_PLUGBOARD}')
-        
+
     def _set_map(self, permutations: list[tuple[int, int]]):
         for x, y in permutations:
             self._check_valid_number(x)
-            self._check_valid_number(y)                                        
-            self._set_key(x,y)    
-        
+            self._check_valid_number(y)
+            self._set_key(x, y)
+
     def _set_key(self, x: int, y: int):
         """
         Set the values on _permutations.

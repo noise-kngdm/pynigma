@@ -1,6 +1,4 @@
-import sys
 import constants
-from typing import List
 from base_enigma import Base
 
 
@@ -34,16 +32,17 @@ class Rotor(Base):
             if keys[i] == values[i]:
                 raise ValueError('Key and value cannot be equal')
 
-    def __init__(self, notch, permutations, ringstellung= 0):
+    def __init__(self, notch, permutations, ringstellung=0):
         """
             Constructor of the Rotor class.
 
             Parameters
             ----------
             ringstellung : int
-                Number that equals to a letter that configure the rotor's ring
+                Number that equals to a letter that configure the rotor's ring.
             notch : int
-                Number which his function is to indicate to his left rotor to do a rotation
+                Number which this function uses to indicate to his left rotor
+                to do a rotation.
             permutations : list[tuple[int, int]]
                 A list of tuples with numbers between in the [1-26] range.
 
@@ -58,7 +57,7 @@ class Rotor(Base):
         """
         self._check_valid_number(notch)
         self._notch = notch
-        self._check_valid_number(ringstellung)        
+        self._check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         super().__init__(permutations)
 
@@ -82,7 +81,7 @@ class Rotor(Base):
 
     @property
     def ringstellung(self):
-        """Ringstellung of the rotor.""" 
+        """Ringstellung of the rotor."""
         return self._ringstellung
 
     @ringstellung.setter
@@ -91,14 +90,14 @@ class Rotor(Base):
         self._ringstellung = ringstellung
         temp_copy = self._permutations.copy()
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
-            new_pos = (i+self._ringstellung)%constants.NUM_CHARS
+            new_pos = (i+self._ringstellung) % constants.NUM_CHARS
             self._permutations[i] = temp_copy[new_pos]
 
     def _set_map(self, permutations: list[tuple[int, int]]):
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
             x = permutations[i][0]
-            new_pos = (i + self._ringstellung ) % constants.NUM_CHARS
+            new_pos = (i + self._ringstellung) % constants.NUM_CHARS
             y = permutations[new_pos][1]
             self._check_valid_number(x)
             self._check_valid_number(y)
-            self._set_key(x,y)
+            self._set_key(x, y)
