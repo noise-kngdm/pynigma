@@ -1,4 +1,3 @@
-import sys
 import constants
 from collections import Counter
 
@@ -89,7 +88,7 @@ class Base:
             If a number was used more than once.
         """
         self._check_once_in_list(keys)
-        self._check_once_in_list(values) 
+        self._check_once_in_list(values)
 
     def cipher(self, num: int):
         """
