@@ -8,6 +8,8 @@ class Rotor(Base):
     """
     Module that represent a Rotor or Walzenlage
     """
+    NUM_PERMUTATIONS = constants.NUM_CHARS
+
     def _check_keys_and_values(self, keys, values):
         """
         Check that a key's value is not equal to the key.
@@ -32,7 +34,7 @@ class Rotor(Base):
             if keys[i] == values[i]:
                 raise ValueError('Key and value cannot be equal')
 
-    def __init__(self, ringstellung, notch, permutations):
+    def __init__(self, notch, permutations, ringstellung= 0):
         """
             Constructor of the Rotor class.
 
@@ -54,20 +56,16 @@ class Rotor(Base):
             ValueError
                 If permutation has more than 26 items
         """
-        super().__init__(permutations)
-
-        if len(permutations) != constants.MAX_NUM:
-            raise TypeError('The number of elements that must to be passed to'
-                            f'{sys._getframe(4).f_code.co_name} is '
-                            f'{constants.MAX_NUM}')
-
-        self._check_valid_number(ringstellung)
-        self._ringstellung = ringstellung
-    
         self._check_valid_number(notch)
         self._notch = notch
+        self._check_valid_number(ringstellung)        
+        self._ringstellung = ringstellung
+        super().__init__(permutations)
 
-        self._set_offset()
+        if len(permutations) != constants.NUM_CHARS:
+            raise TypeError('The number of elements that must to be passed to '
+                            f'the permutations list is '
+                            f'{Rotor.NUM_PERMUTATIONS}')
 
     def _set_key(self, x: int, y: int):
         """
@@ -82,13 +80,25 @@ class Rotor(Base):
         """
         self._permutations[x] = y
 
-    def _set_offset(self):
-        """
-        Set the offset in the rotor's ring.
-        """
+    @property
+    def ringstellung(self):
+        """Ringstellung of the rotor.""" 
+        return self._ringstellung
+
+    @ringstellung.setter
+    def ringstellung(self, ringstellung):
+        self._check_valid_number(ringstellung)
+        self._ringstellung = ringstellung
         temp_copy = self._permutations.copy()
-        for i in range(constants.MIN_NUM, constants.MAX_NUM + 1):
-            new_pos = (i+self._ringstellung)%constants.MAX_NUM
-            if new_pos == 0:
-                new_pos = new_pos + 1
+        for i in range(constants.MIN_NUM, constants.NUM_CHARS):
+            new_pos = (i+self._ringstellung)%constants.NUM_CHARS
             self._permutations[i] = temp_copy[new_pos]
+
+    def _set_map(self, permutations: list[tuple[int, int]]):
+        for i in range(constants.MIN_NUM, constants.NUM_CHARS):
+            x = permutations[i][0]
+            new_pos = (i + self._ringstellung ) % constants.NUM_CHARS
+            y = permutations[new_pos][1]
+            self._check_valid_number(x)
+            self._check_valid_number(y)
+            self._set_key(x,y)
