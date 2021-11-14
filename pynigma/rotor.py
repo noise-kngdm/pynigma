@@ -108,3 +108,22 @@ class Rotor(Base):
             self._check_valid_number(x)
             self._check_valid_number(y)
             self._set_key(x, y)
+
+    def rotate(self):
+        """
+        The permutations values change by 1 
+        """
+        temp_copy = self._permutations.copy()
+        for i in range(constants.MIN_NUM, constants.NUM_CHARS):
+            self._permutations[i] = temp_copy[(i+1)%constants.MAX_CHAR]
+            
+    def must_rotate_next_rotor(self):
+        """
+        Check if the next rotor has to rotate
+        """
+        for value in self._notch:
+            if value == self._permutations[0]:
+                return True
+            else:
+                return False
+
