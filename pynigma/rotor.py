@@ -37,16 +37,17 @@ class Rotor(Base):
                 If permutation has more than 26 items.
         """
         for i in notch:
-            common._check_valid_number(i)
+            common.check_valid_number(i)
         self._notch = notch
         common.check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         super().__init__(permutations)
         self._fixed = fixed
 
-        if len(notch) < constants.MIN_NUM+1 or len(notch) > constants.NUM_CHARS:
+        if len(notch) < constants.MIN_NUM+1 or \
+           len(notch) > constants.NUM_CHARS:
             raise TypeError('The number of elements that must to be passed to '
-                            f'the notch list is not appropiated')
+                            'the notch list is not appropiated')
 
         if len(permutations) != constants.NUM_CHARS:
             raise TypeError('The number of elements that must to be passed to '
@@ -99,3 +100,8 @@ class Rotor(Base):
             A number which indicates the position of the rotor.
         """
         return pos in self._notch
+
+    @property
+    def fixed(self):
+        """If the rotor is movable or not."""
+        return self._fixed
