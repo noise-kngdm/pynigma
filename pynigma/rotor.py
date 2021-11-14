@@ -1,4 +1,5 @@
 import constants
+import common
 from base_enigma import Base
 
 
@@ -36,9 +37,9 @@ class Rotor(Base):
                 If permutation has more than 26 items.
         """
         for i in notch:
-            self._check_valid_number(i)
+            common._check_valid_number(i)
         self._notch = notch
-        self._check_valid_number(ringstellung)
+        common.check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         super().__init__(permutations)
         self._fixed = fixed
@@ -72,7 +73,7 @@ class Rotor(Base):
 
     @ringstellung.setter
     def ringstellung(self, ringstellung):
-        self._check_valid_number(ringstellung)
+        common.check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         temp_copy = self._permutations.copy()
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
@@ -84,8 +85,8 @@ class Rotor(Base):
             x = permutations[i][0]
             new_pos = (i + self._ringstellung) % constants.NUM_CHARS
             y = permutations[new_pos][1]
-            self._check_valid_number(x)
-            self._check_valid_number(y)
+            common.check_valid_number(x)
+            common.check_valid_number(y)
             self._set_key(x, y)
 
     def must_rotate_next_rotor(self, pos):

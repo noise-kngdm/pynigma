@@ -1,5 +1,6 @@
 import sys
 import constants
+import common
 from base_enigma import Base
 
 
@@ -57,8 +58,8 @@ class PlugBoard(Base):
 
     def _set_map(self, permutations: list[tuple[int, int]]):
         for x, y in permutations:
-            self._check_valid_number(x)
-            self._check_valid_number(y)
+            common.check_valid_number(x)
+            common.check_valid_number(y)
             self._set_key(x, y)
 
     def _set_key(self, x: int, y: int):

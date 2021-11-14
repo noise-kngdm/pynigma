@@ -1,4 +1,5 @@
 import constants
+import common
 from collections import Counter
 
 
@@ -47,24 +48,6 @@ class Base:
             A list with tuples of numbers between in the [1-26] range.
         """
         raise NotImplementedError
-
-    def _check_valid_number(self, num: int):
-        """
-        Checks that the number passed as a parameter is a valid one.
-
-        Parameters
-        ----------
-        num : int
-            Number that will be checked.
-
-        Raises
-        ------
-        ValueError
-            If the number is not in the expected range.
-        """
-        if num < constants.MIN_NUM or num > constants.MAX_NUM:
-            raise ValueError(f'The value of {num} must be between '
-                             f'{constants.MIN_NUM} and {constants.MAX_NUM}')
 
     def _check_once_in_list(self, keys):
         occurences = Counter(keys)
