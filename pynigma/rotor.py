@@ -41,8 +41,8 @@ class Rotor(Base):
             ringstellung : int
                 Number that equals to a letter that configure the rotor's ring.
             notch : set of int
-                Set of int which this function uses to indicate to the next rotor
-                to do a rotation.
+                Set of int which this function uses to indicate to the next
+                rotor to do a rotation.
             permutations : list[tuple[int, int]]
                 A list of tuples with numbers between in the [1-26] range.
 
@@ -111,12 +111,12 @@ class Rotor(Base):
 
     def rotate(self):
         """
-        The permutations values change by 1 
+        The permutations values change by 1
         """
         temp_copy = self._permutations.copy()
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
-            self._permutations[i] = temp_copy[(i+1)%constants.MAX_CHAR]
-            
+            self._permutations[i] = temp_copy[(i+1) % constants.MAX_CHAR]
+
     def must_rotate_next_rotor(self):
         """
         Check if the next rotor has to rotate
@@ -126,4 +126,3 @@ class Rotor(Base):
                 return True
             else:
                 return False
-
