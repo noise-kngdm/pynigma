@@ -10,12 +10,12 @@ init_vals = [
 ]
 
 ringstellung = [2, 13]
-notch = [3, 10]
+notch = {3, 10}
 
 
-@pytest.mark.parametrize('test_list', tuple(init_vals))
-@pytest.mark.parametrize('ringstu', ringstellung)
-@pytest.mark.parametrize('notch', notch)
+@pytest.mark.parametrize('test_list, ringstu, notch',
+                            [(tuple(init_vals[0]), ringstellung[0], notch)]
+                        )
 def test_rotor_init(notch, test_list, ringstu):
     pynigma.rotor.Rotor(notch, test_list, ringstu)
 
@@ -36,7 +36,7 @@ expected_map = [{0: 3, 1: 4, 2: 5, 3: 6, 4: 7, 5: 8, 6: 9, 7: 10, 8: 11, 9: 12,
     (init_vals[1], ringstellung[1], expected_map[1])
     ])
 def test_rotor_ringstellung(test_list, expected_map, ringstellung):
-    rotor = pynigma.rotor.Rotor(notch[0], test_list, ringstellung)
+    rotor = pynigma.rotor.Rotor(notch, test_list, ringstellung)
     assert rotor._permutations == expected_map
 
 
@@ -45,7 +45,7 @@ def test_rotor_ringstellung(test_list, expected_map, ringstellung):
                           (init_vals[1], ringstellung[1], expected_map[1])
                           ])
 def test_rotor_set_ringstellung(test_list, ringstellung, expected_map):
-    rotor = pynigma.rotor.Rotor(notch[0], test_list)
+    rotor = pynigma.rotor.Rotor(notch, test_list)
     rotor.ringstellung = ringstellung
     assert rotor._permutations == expected_map
 
@@ -62,3 +62,14 @@ def test_rotor_set_ringstellung(test_list, ringstellung, expected_map):
 def test_rotor_init_ko(init_vals, ringstellung, notch):
     with pytest.raises(Exception):
         pynigma.rotor.Rotor(notch, init_vals, ringstellung)
+
+@pytest.mark.parametrize('test_list, ringstu, notch, user_input, expected_output',
+                         [
+                          (tuple(init_vals[0]), ringstellung[0], notch, 1, 4),
+                          (tuple(init_vals[0]), ringstellung[0], notch, 25, 2),
+                          (tuple(init_vals[1]), ringstellung[0], notch, 1, 8),
+                          (tuple(init_vals[1]), ringstellung[0], notch, 25, 6)
+                         ])
+def test_rotor_cipher(notch, test_list, ringstu, user_input, expected_output):
+    machine = pynigma.rotor.Rotor(notch, test_list, ringstu)
+    assert machine.cipher(user_input) == expected_output
