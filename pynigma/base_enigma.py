@@ -13,7 +13,7 @@ class Base:
 
         Parameters
         ----------
-        pairs : list[tuple[int, int]]
+        permutations : list[tuple[int, int]]
             A list with tuples of numbers between in the [1-26] range.
         """
         self._permutations = {x: x for x in range(constants.MIN_NUM,
