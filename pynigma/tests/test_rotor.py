@@ -13,9 +13,9 @@ ringstellung = [2, 13]
 notch = {3, 10}
 
 
-@pytest.mark.parametrize('test_list, ringstu, notch',
-                            [(tuple(init_vals[0]), ringstellung[0], notch)]
-                        )
+@pytest.mark.parametrize('test_list', tuple(init_vals))
+@pytest.mark.parametrize('ringstu', ringstellung)
+@pytest.mark.parametrize('notch', (notch,))
 def test_rotor_init(notch, test_list, ringstu):
     pynigma.rotor.Rotor(notch, test_list, ringstu)
 
