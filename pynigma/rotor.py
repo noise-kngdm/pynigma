@@ -32,7 +32,7 @@ class Rotor(Base):
             if keys[i] == values[i]:
                 raise ValueError('Key and value cannot be equal')
 
-    def __init__(self, notch, permutations, ringstellung=0):
+    def __init__(self, notch, permutations, ringstellung=0, fixed=False):
         """
             Constructor of the Rotor class.
 
@@ -45,6 +45,8 @@ class Rotor(Base):
                 rotor to rotate.
             permutations : list[tuple[int, int]]
                 A list of tuples with numbers between in the [1-26] range.
+            fixed : Boolean
+                A boolean which indicates if the rotor can rotate or not.
 
             Raises
             ------
@@ -53,9 +55,9 @@ class Rotor(Base):
             ValueError
                 If the set of grundstellung is not in the expected range.
             ValueError
-                If notch has more than 26 items
+                If notch has more than 26 items.
             ValueError
-                If permutation has more than 26 items
+                If permutation has more than 26 items.
         """
         for i in notch:
             self._check_valid_number(i)
@@ -63,8 +65,9 @@ class Rotor(Base):
         self._check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         super().__init__(permutations)
+        self._fixed = fixed
 
-        if len(notch) == constants.MIN_NUM+1 or len(notch) > constants.NUM_CHARS:
+        if len(notch) < constants.MIN_NUM+1 or len(notch) > constants.NUM_CHARS:
             raise TypeError('The number of elements that must to be passed to '
                             f'the notch list is not appropiated')
 
@@ -109,20 +112,13 @@ class Rotor(Base):
             self._check_valid_number(y)
             self._set_key(x, y)
 
-    def rotate(self):
+    def must_rotate_next_rotor(self, pos):
         """
-        The permutations values change by 1
-        """
-        temp_copy = self._permutations.copy()
-        for i in range(constants.MIN_NUM, constants.NUM_CHARS):
-            self._permutations[i] = temp_copy[(i+1) % constants.MAX_CHAR]
+        Check if the next rotor has to rotate.
 
-    def must_rotate_next_rotor(self):
+        Parameters
+        ----------
+        pos : int
+            A number which indicates the position of the rotor.
         """
-        Check if the next rotor has to rotate
-        """
-        for value in self._notch:
-            if value == self._permutations[0]:
-                return True
-            else:
-                return False
+        return pos in self._notch
