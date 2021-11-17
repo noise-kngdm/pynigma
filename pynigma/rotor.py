@@ -8,30 +8,6 @@ class Rotor(Base):
     """
     NUM_PERMUTATIONS = constants.NUM_CHARS
 
-    def _check_keys_and_values(self, keys, values):
-        """
-        Check that a key's value is not equal to the key.
-
-        Parameters
-        ----------
-        keys : list of int
-            A list with all the keys used.
-        values : list of int
-            A list with all the values used.
-
-        Raises
-        ------
-        ValueError
-            If a key's value is equal to the key.
-        ValueError
-            If the number is not in the expected range.
-        """
-        super()._check_keys_and_values(keys, values)
-
-        for i in range(len(keys)):
-            if keys[i] == values[i]:
-                raise ValueError('Key and value cannot be equal')
-
     def __init__(self, notch, permutations, ringstellung=0, fixed=False):
         """
             Constructor of the Rotor class.
