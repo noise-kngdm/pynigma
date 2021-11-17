@@ -1,4 +1,5 @@
 import rotor
+import reflector
 import constants
 import common
 
@@ -56,3 +57,19 @@ values_gamma = "LEYJVCNIXWPBQMDRTAKZGFUHOS"
 notch = {ord('A')-ord(constants.MIN_CHAR)}
 ROTOR_GAMMA = rotor.Rotor(notch, common.str_to_tuples(keys, values_gamma),
                           0, True)
+
+# Defining B reflector
+values_b = "YRUHQSLDPXNGOKMIEBFZCWVJAT"
+REFLECTOR_B = reflector.Reflector(common.str_to_tuples(keys, values_b))
+
+# Defining C reflector
+values_c = "FVPJIAOYEDRZXWGCTKUQSBNMHL"
+REFLECTOR_C = reflector.Reflector(common.str_to_tuples(keys, values_c))
+
+# Defining B thin reflector
+values_b_thin = "ENKQAUYWJICOPBLMDXZVFTHRGS"
+REFLECTOR_B_thin = reflector.Reflector(common.str_to_tuples(keys, values_b_thin))
+
+# Defining C thin reflector
+values_c_thin = "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+REFLECTOR_C_thin = reflector.Reflector(common.str_to_tuples(keys, values_c_thin))
