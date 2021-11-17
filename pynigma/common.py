@@ -22,3 +22,20 @@ def str_to_tuples(str1, str2):
           for i in range(constants.MIN_NUM, constants.NUM_CHARS)]
 
     return r
+
+
+def check_valid_number(num: int):
+    """
+    Checks that the number passed as a parameter is a valid one.
+     Parameters
+    ----------
+    num : int
+        Number that will be checked.
+    Raises
+    ------
+    ValueError
+        If the number is not in the expected range.
+    """
+    if num < constants.MIN_NUM or num > constants.MAX_NUM:
+        raise ValueError(f'The value of {num} must be between '
+                         f'{constants.MIN_NUM} and {constants.MAX_NUM}')

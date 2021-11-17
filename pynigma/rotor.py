@@ -1,4 +1,5 @@
 import constants
+import common
 from base_enigma import Base
 
 
@@ -36,16 +37,17 @@ class Rotor(Base):
                 If permutation has more than 26 items.
         """
         for i in notch:
-            self._check_valid_number(i)
+            common.check_valid_number(i)
         self._notch = notch
-        self._check_valid_number(ringstellung)
+        common.check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         super().__init__(permutations)
         self._fixed = fixed
 
-        if len(notch) < constants.MIN_NUM+1 or len(notch) > constants.NUM_CHARS:
+        if len(notch) < constants.MIN_NUM+1 or \
+           len(notch) > constants.NUM_CHARS:
             raise TypeError('The number of elements that must to be passed to '
-                            f'the notch list is not appropiated')
+                            'the notch list is not appropiated')
 
         if len(permutations) != constants.NUM_CHARS:
             raise TypeError('The number of elements that must to be passed to '
@@ -72,7 +74,7 @@ class Rotor(Base):
 
     @ringstellung.setter
     def ringstellung(self, ringstellung):
-        self._check_valid_number(ringstellung)
+        common.check_valid_number(ringstellung)
         self._ringstellung = ringstellung
         temp_copy = self._permutations.copy()
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
@@ -84,8 +86,8 @@ class Rotor(Base):
             x = permutations[i][0]
             new_pos = (i + self._ringstellung) % constants.NUM_CHARS
             y = permutations[new_pos][1]
-            self._check_valid_number(x)
-            self._check_valid_number(y)
+            common.check_valid_number(x)
+            common.check_valid_number(y)
             self._set_key(x, y)
 
     def must_rotate_next_rotor(self, pos):
@@ -98,3 +100,8 @@ class Rotor(Base):
             A number which indicates the position of the rotor.
         """
         return pos in self._notch
+
+    @property
+    def fixed(self):
+        """If the rotor is movable or not."""
+        return self._fixed

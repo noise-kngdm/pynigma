@@ -1,3 +1,4 @@
+import common
 import constants
 from base_enigma import Base
 
@@ -32,8 +33,8 @@ class Reflector(Base):
             A list with pairs of key and number it will be translated to.
         """
         for x, y in permutations:
-            self._check_valid_number(x)
-            self._check_valid_number(y)
+            common.check_valid_number(x)
+            common.check_valid_number(y)
             self._set_key(x, y)
 
     def _set_key(self, x: int, y: int):
