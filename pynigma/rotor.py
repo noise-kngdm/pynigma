@@ -18,7 +18,7 @@ class Rotor(Base):
                 Number that equals to a letter that configure the rotor's ring.
             notch : set of int
                 Set of int which this function uses to indicate to the next
-                rotor to do a rotation.
+                rotor to rotate.
             permutations : list[tuple[int, int]]
                 A list of tuples with numbers between in the [1-26] range.
             fixed : Boolean
