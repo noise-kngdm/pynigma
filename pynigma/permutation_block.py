@@ -17,6 +17,8 @@ class PermutationBlock:
         ----------
         rotors : list[Rotor]
             List of rotors used to cipher and decipher a message.
+        positions : list[int]
+            List with the initial position -grundstellung- of each rotor.
         reflector : Reflector
             Reflector used to cipher and decipher a message.
         """
