@@ -1,5 +1,6 @@
 import sys
 import re
+from collections import Counter
 import constants as ct
 from rotor import Rotor
 from plugboard import PlugBoard
@@ -28,10 +29,17 @@ class Enigma:
         reflector : Reflector
             Reflector used to cipher and decipher a message.
         """
+        if not isinstance(plugboard, PlugBoard):
+            raise(EnigmaException("The parameter plugboard must be an"
+                                  " instance of the PlugBoard class"))
+
         if len(rotors) not in ct.VALID_NUM_ROTORS:
             valid_nums = ' or '.join([str(x) for x in ct.VALID_NUM_ROTORS])
             raise(EnigmaException(f"{len(rotors)} is not a valid number of"
                                   f"rotors, please use {valid_nums} rotors"))
+        occurences = Counter(rotors)
+        if occurences.most_common(1)[0][1] > 1:
+            raise EnigmaException('You can only use each rotor once')
 
         self._permutation_block = PermutationBlock(rotors, positions,
                                                    reflector)
