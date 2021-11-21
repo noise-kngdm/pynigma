@@ -2,6 +2,7 @@ import sys
 import re
 from collections import Counter
 import constants as ct
+import common
 from rotor import Rotor
 from plugboard import PlugBoard
 from reflector import Reflector
@@ -32,6 +33,7 @@ class Enigma:
         if not isinstance(plugboard, PlugBoard):
             raise(EnigmaException("The parameter plugboard must be an"
                                   " instance of the PlugBoard class"))
+        self._plugboard = plugboard
 
         if len(rotors) not in ct.VALID_NUM_ROTORS:
             valid_nums = ' or '.join([str(x) for x in ct.VALID_NUM_ROTORS])
@@ -58,7 +60,7 @@ class Enigma:
         Returns
         -------
         str
-            Normalized string
+            Normalized string.
         """
         return re.sub(r'[^A-Z]', '', string.upper())
 
@@ -77,7 +79,7 @@ class Enigma:
             The string ciphered using the machine's state and configuration.
         """
         normalized_str = Enigma.normalize_string(string)
-        ciphered_str = [ct.MIN_CHAR + self.cipher_char(ord(x) - ct.MIN_CHAR)
+        ciphered_str = [common.int_to_char(self.cipher_char(common.char_to_int(x)))
                         for x in normalized_str]
 
         return ''.join(ciphered_str)
@@ -96,10 +98,12 @@ class Enigma:
         str
             The character ciphered using the machine's state and configuration.
         """
-        if len(char) != 1:
-            raise EnigmaException(f"The {sys._getframe(1).f_code.co_name}"
-                                  " method must be called using exactly "
-                                  "1 parameter.")
+        with open('/tmp/lol', 'a') as f:
+            f.write(f'Aprendiendo before plugboard: {char}\n')
         ciphered_char = self._plugboard.cipher(char)
-        ciphered_char = self.permutation_block.cipher(ciphered_char)
+        with open('/tmp/lol', 'a') as f:
+            f.write(f'Aprendiendo after plugboard: {ciphered_char}\n')
+        ciphered_char = self._permutation_block.cipher(ciphered_char)
+        with open('/tmp/lol', 'a') as f:
+            f.write(f'Aprendiendo after permutation block: {ciphered_char}\n')
         return self._plugboard.cipher(ciphered_char)

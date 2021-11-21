@@ -39,3 +39,9 @@ def check_valid_number(num: int):
     if num < constants.MIN_NUM or num > constants.MAX_NUM:
         raise ValueError(f'The value of {num} must be between '
                          f'{constants.MIN_NUM} and {constants.MAX_NUM}')
+
+def int_to_char(num: int) -> str:
+    return chr(num + ord(constants.MIN_CHAR))
+
+def char_to_int(char: str) -> int:
+    return ord(char) - ord(constants.MIN_CHAR)

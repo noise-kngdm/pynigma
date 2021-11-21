@@ -1,6 +1,6 @@
 import constants
 import common
-from base_enigma import Base
+from base import Base
 
 
 class Rotor(Base):
