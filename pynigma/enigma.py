@@ -84,26 +84,20 @@ class Enigma:
 
         return ''.join(ciphered_str)
 
-    def cipher_char(self, char: str) -> str:
+    def cipher_char(self, char: int) -> int:
         """
         Ciphers the character passed as parameter.
 
         Parameters
         ----------
-        character : str
+        char : int
             Character that should be ciphered.
 
         Returns
         -------
-        str
+        int
             The character ciphered using the machine's state and configuration.
         """
-        with open('/tmp/lol', 'a') as f:
-            f.write(f'Aprendiendo before plugboard: {char}\n')
         ciphered_char = self._plugboard.cipher(char)
-        with open('/tmp/lol', 'a') as f:
-            f.write(f'Aprendiendo after plugboard: {ciphered_char}\n')
         ciphered_char = self._permutation_block.cipher(ciphered_char)
-        with open('/tmp/lol', 'a') as f:
-            f.write(f'Aprendiendo after permutation block: {ciphered_char}\n')
-        return self._plugboard.cipher(ciphered_char)
+        return self._plugboard.cipher(ciphered_char, False)

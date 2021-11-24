@@ -67,9 +67,10 @@ class PermutationBlock:
         order = range(len(self._rotors))
         order = order if forward else reversed(order)
         for i in order:
-            cipher_char = self._rotors[i].cipher(
-                (cipher_char + self._rotor_positions[i]) % constants.NUM_CHARS
-            )
+            cipher_char = (self._rotors[i].cipher(
+                (cipher_char + self._rotor_positions[i]) % constants.NUM_CHARS,
+                forward
+            ) - self._rotor_positions[i]) % constants.NUM_CHARS
 
         return cipher_char
 
@@ -114,4 +115,4 @@ class PermutationBlock:
         self._prepare_rotors()
         ciphered_char = self._cipher_stage(char, True)
         ciphered_char = self._reflector.cipher(ciphered_char)
-        return self._cipher_stage(ciphered_char)
+        return self._cipher_stage(ciphered_char, False)
