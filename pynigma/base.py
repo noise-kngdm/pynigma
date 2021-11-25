@@ -1,5 +1,4 @@
 import constants
-import common
 from collections import Counter
 
 
@@ -20,10 +19,18 @@ class Base:
         self._permutations = {x: x for x in range(constants.MIN_NUM,
                                                   constants.NUM_CHARS)}
         self._set_map(permutations)
+        self._set_rev_permutations()
 
         if len(permutations) > 0:
             self._check_keys_and_values([x[0] for x in permutations],
                                         [x[1] for x in permutations])
+
+    def _set_rev_permutations(self):
+        self._rev_permutations = {
+            y: x for x, y in
+               [(list(self._permutations.keys())[i], list(self._permutations.values())[i])
+                for i in range(len(self._permutations))]
+        }
 
     def _set_key(self, x: int, y: int):
         """
@@ -44,7 +51,7 @@ class Base:
 
         Parameters
         ----------
-        pairs : list[tuple[int, int]]
+        permutations : list[tuple[int, int]]
             A list with tuples of numbers between in the [1-26] range.
         """
         raise NotImplementedError
@@ -73,7 +80,7 @@ class Base:
         self._check_once_in_list(keys)
         self._check_once_in_list(values)
 
-    def cipher(self, num: int):
+    def cipher(self, num: int, forward=False):
         """
         Returns the parameter ciphered.
 
@@ -81,6 +88,8 @@ class Base:
         ----------
         num : int
             The ordinal corresponding to the character that should be ciphered.
+        forward : bool
+            If the ciphering direction is forward.
 
         Returns
         -------
@@ -88,7 +97,10 @@ class Base:
             The ordinal corresponding to the ciphered parameter.
         """
         try:
-            return self._permutations[num]
+            if forward:
+                return self._permutations[num]
+            else:
+                return self._rev_permutations[num]
         except KeyError as e:
             raise KeyError('The value introduced is not valid, please, use '
                            f'a character between {constants.MIN_CHAR} and '

@@ -40,11 +40,3 @@ wrong_values = [[(3, 23), (8, 5), (4, 5), (18, 8), (10, 1), (11, 20), (17, 21),
 def test_reflector_init_ko(test_values):
     with pytest.raises(Exception):
         Reflector(test_values)
-
-
-@pytest.mark.parametrize('test_values', tuple(init_vals))
-def test_reflector_cipher(test_values):
-    ref = Reflector(test_values)
-
-    for x, y in test_values:
-        assert ref.cipher(x) == y

@@ -1,6 +1,6 @@
 import common
 import constants
-from base_enigma import Base
+from base import Base
 
 
 class Reflector(Base):

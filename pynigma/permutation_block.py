@@ -17,6 +17,8 @@ class PermutationBlock:
         ----------
         rotors : list[Rotor]
             List of rotors used to cipher and decipher a message.
+        positions : list[int]
+            List with the initial position -grundstellung- of each rotor.
         reflector : Reflector
             Reflector used to cipher and decipher a message.
         """
@@ -64,11 +66,11 @@ class PermutationBlock:
         cipher_char = char
         order = range(len(self._rotors))
         order = order if forward else reversed(order)
-
         for i in order:
-            cipher_char = self._rotors[i].cipher(
-                cipher_char + self._rotor_positions[i] % constants.NUM_CHARS
-            )
+            cipher_char = (self._rotors[i].cipher(
+                (cipher_char + self._rotor_positions[i]) % constants.NUM_CHARS,
+                forward
+            ) - self._rotor_positions[i]) % constants.NUM_CHARS
 
         return cipher_char
 
@@ -92,7 +94,7 @@ class PermutationBlock:
             # Double stepping
             must_rotate[1] = True
 
-        for i in len(self._rotors):
+        for i in range(len(self._rotors)):
             if must_rotate[i]:
                 self._rotate_rotor(i)
 
@@ -113,4 +115,4 @@ class PermutationBlock:
         self._prepare_rotors()
         ciphered_char = self._cipher_stage(char, True)
         ciphered_char = self._reflector.cipher(ciphered_char)
-        return self._cipher_stage(ciphered_char)
+        return self._cipher_stage(ciphered_char, False)

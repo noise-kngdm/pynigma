@@ -1,6 +1,6 @@
 import constants
 import common
-from base_enigma import Base
+from base import Base
 
 
 class Rotor(Base):
@@ -78,17 +78,18 @@ class Rotor(Base):
         self._ringstellung = ringstellung
         temp_copy = self._permutations.copy()
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
-            new_pos = (i+self._ringstellung) % constants.NUM_CHARS
-            self._permutations[i] = temp_copy[new_pos]
+            new_pos = (i - self._ringstellung) % constants.NUM_CHARS
+            self._permutations[i] = (temp_copy[new_pos] + self._ringstellung) % constants.NUM_CHARS
+        self._set_rev_permutations()
 
     def _set_map(self, permutations: list[tuple[int, int]]):
         for i in range(constants.MIN_NUM, constants.NUM_CHARS):
             x = permutations[i][0]
-            new_pos = (i + self._ringstellung) % constants.NUM_CHARS
-            y = permutations[new_pos][1]
+            y = permutations[i][1]
             common.check_valid_number(x)
             common.check_valid_number(y)
             self._set_key(x, y)
+        self.ringstellung = self._ringstellung
 
     def must_rotate_next_rotor(self, pos):
         """

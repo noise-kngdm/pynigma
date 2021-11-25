@@ -1,7 +1,7 @@
 import sys
 import constants
 import common
-from base_enigma import Base
+from base import Base
 
 
 class PlugBoard(Base):
@@ -33,14 +33,14 @@ class PlugBoard(Base):
                 raise ValueError('You can only use each character once for '
                                  'each permutation')
 
-    def __init__(self, pairs: list[tuple[int, int]]):
+    def __init__(self, pairs = []):
         """
         Constructor of the PlugBoard class.
 
         Parameters
         ----------
         pairs : list[tuple[int, int]]
-            A list with up to 10 tuples of numbers between in the [1-26] range.
+            A list with up to 10 tuples of numbers between in the [0-25] range.
 
         Raises
         ------
