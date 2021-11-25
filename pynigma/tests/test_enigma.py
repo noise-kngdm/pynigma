@@ -62,7 +62,6 @@ test_constructor_ringstellung = rotor.Rotor(notch={ord('E')-ord(ct.MIN_CHAR)},
                                             ringstellung=19)
 
 
-@pytest.mark.xfail
 @pytest.mark.parametrize('positions, reflector, rotors,\
 plugboard,user_input, expected_output', [
     ([0, 0, 0], inst.REFLECTOR_B, [test_constructor_ringstellung, inst.ROTOR_III, inst.ROTOR_IV],
