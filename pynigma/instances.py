@@ -45,7 +45,7 @@ class Rotors:
 
     @classmethod
     def ROTOR_GAMMA(cls):
-        return Rotor({cti('A')}, strtt(Rotors._keys, "LEYJVCNIXWPBQMDRTAKZGFUHOS"), fixed=True)
+        return Rotor({cti('A')}, strtt(Rotors._keys, "FSOKANUERHMBTIYCWLQPZXVGJD"), fixed=True)
 
 
 class Reflectors:
