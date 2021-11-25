@@ -1,75 +1,68 @@
-import rotor
-import reflector
-import constants
-import common
+from rotor import Rotor
+from reflector import Reflector
+from common import char_to_int as cti
+from common import str_to_tuples as strtt
 
 
-keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+class Rotors:
+    _keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-# Defining Rotor I
-values_1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-notch = {ord('Q')-ord(constants.MIN_CHAR)}
-ROTOR_I = rotor.Rotor(notch, common.str_to_tuples(keys, values_1))
+    @classmethod
+    def ROTOR_I(cls):
+        return Rotor({cti('Q')}, strtt(Rotors._keys, "EKMFLGDQVZNTOWYHXUSPAIBRCJ"))
 
-# Defining Rotor II
-values_2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE"
-notch = {ord('E')-ord(constants.MIN_CHAR)}
-ROTOR_II = rotor.Rotor(notch, common.str_to_tuples(keys, values_2))
+    @classmethod
+    def ROTOR_II(cls):
+        return Rotor({cti('E')}, strtt(Rotors._keys, "AJDKSIRUXBLHWTMCQGZNPYFVOE"))
 
-# Defining Rotor III
-values_3 = "BDFHJLCPRTXVZNYEIWGAKMUSQO"
-notch = {ord('V')-ord(constants.MIN_CHAR)}
-ROTOR_III = rotor.Rotor(notch, common.str_to_tuples(keys, values_3))
+    @classmethod
+    def ROTOR_III(cls):
+        return Rotor({cti('V')}, strtt(Rotors._keys, "BDFHJLCPRTXVZNYEIWGAKMUSQO"))
 
-# Defining Rotor IV
-values_4 = "ESOVPZJAYQUIRHXLNFTGKDCMWB"
-notch = {ord('J')-ord(constants.MIN_CHAR)}
-ROTOR_IV = rotor.Rotor(notch, common.str_to_tuples(keys, values_4))
+    @classmethod
+    def ROTOR_IV(cls):
+        return Rotor({cti('J')}, strtt(Rotors._keys, "ESOVPZJAYQUIRHXLNFTGKDCMWB"))
 
-# Defining Rotor V
-values_5 = "VZBRGITYUPSDNHLXAWMJQOFECK"
-notch = {ord('Z')-ord(constants.MIN_CHAR)}
-ROTOR_V = rotor.Rotor(notch, common.str_to_tuples(keys, values_5))
+    @classmethod
+    def ROTOR_V(cls):
+        return Rotor({cti('Z')}, strtt(Rotors._keys, "VZBRGITYUPSDNHLXAWMJQOFECK"))
 
-# Defining Rotor VI
-values_6 = "JPGVOUMFYQBENHZRDKASXLICTW"
-notch = {ord('Z')-ord(constants.MIN_CHAR), ord('M')-ord(constants.MIN_CHAR)}
-ROTOR_VI = rotor.Rotor(notch, common.str_to_tuples(keys, values_6))
+    @classmethod
+    def ROTOR_VI(cls):
+        return Rotor({cti('Z'), cti('M')}, strtt(Rotors._keys, "JPGVOUMFYQBENHZRDKASXLICTW"))
 
-# Defining Rotor VII
-values_7 = "NZJHGRCXMYSWBOUFAIVLPEKQDT"
-notch = {ord('Z')-ord(constants.MIN_CHAR), ord('M')-ord(constants.MIN_CHAR)}
-ROTOR_VII = rotor.Rotor(notch, common.str_to_tuples(keys, values_7))
+    @classmethod
+    def ROTOR_VII(cls):
+        return Rotor({cti('Z'), cti('M')}, strtt(Rotors._keys, "NZJHGRCXMYSWBOUFAIVLPEKQDT"))
 
-# Defining Rotor VIII
-values_8 = "FKQHTLXOCBJSPDZRAMEWNIUYGV"
-notch = {ord('Z')-ord(constants.MIN_CHAR), ord('M')-ord(constants.MIN_CHAR)}
-ROTOR_VIII = rotor.Rotor(notch, common.str_to_tuples(keys, values_8))
+    @classmethod
+    def ROTOR_VIII(cls):
+        return Rotor({cti('Z'), cti('M')}, strtt(Rotors._keys, "FKQHTLXOCBJSPDZRAMEWNIUYGV"))
 
-# Defining Beta rotor
-values_beta = "LEYJVCNIXWPBQMDRTAKZGFUHOS"
-notch = {ord('A')-ord(constants.MIN_CHAR)}
-ROTOR_BETA = rotor.Rotor(notch, common.str_to_tuples(keys, values_beta),
-                         0, True)
+    @classmethod
+    def ROTOR_BETA(cls):
+        return Rotor({cti('A')}, strtt(Rotors._keys, "LEYJVCNIXWPBQMDRTAKZGFUHOS"), fixed=True)
 
-# Defining Gamma rotor
-values_gamma = "LEYJVCNIXWPBQMDRTAKZGFUHOS"
-notch = {ord('A')-ord(constants.MIN_CHAR)}
-ROTOR_GAMMA = rotor.Rotor(notch, common.str_to_tuples(keys, values_gamma),
-                          0, True)
+    @classmethod
+    def ROTOR_GAMMA(cls):
+        return Rotor({cti('A')}, strtt(Rotors._keys, "LEYJVCNIXWPBQMDRTAKZGFUHOS"), fixed=True)
 
-# Defining B reflector
-values_b = "YRUHQSLDPXNGOKMIEBFZCWVJAT"
-REFLECTOR_B = reflector.Reflector(common.str_to_tuples(keys, values_b))
 
-# Defining C reflector
-values_c = "FVPJIAOYEDRZXWGCTKUQSBNMHL"
-REFLECTOR_C = reflector.Reflector(common.str_to_tuples(keys, values_c))
+class Reflectors:
+    _keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-# Defining B thin reflector
-values_b_thin = "ENKQAUYWJICOPBLMDXZVFTHRGS"
-REFLECTOR_B_thin = reflector.Reflector(common.str_to_tuples(keys, values_b_thin))
+    @classmethod
+    def REFLECTOR_B(cls):
+        return Reflector(strtt(Reflectors._keys, "YRUHQSLDPXNGOKMIEBFZCWVJAT"))
 
-# Defining C thin reflector
-values_c_thin = "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
-REFLECTOR_C_thin = reflector.Reflector(common.str_to_tuples(keys, values_c_thin))
+    @classmethod
+    def REFLECTOR_C(cls):
+        return Reflector(strtt(Reflectors._keys, "FVPJIAOYEDRZXWGCTKUQSBNMHL"))
+
+    @classmethod
+    def REFLECTOR_B_thin(cls):
+        return Reflector(strtt(Reflectors._keys, "ENKQAUYWJICOPBLMDXZVFTHRGS"))
+
+    @classmethod
+    def REFLECTOR_C_thin(cls):
+        return Reflector(strtt(Reflectors._keys, "RDOBJNTKVEHMLFCWZAXGYIPSUQ"))
