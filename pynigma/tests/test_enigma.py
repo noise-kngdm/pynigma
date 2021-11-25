@@ -1,7 +1,6 @@
 import pytest
 import sys
 import os
-from copy import deepcopy
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import common
 import constants as ct
@@ -24,8 +23,8 @@ init_positions = [
 ]
 
 init_reflector = [
-    deepcopy(Reflectors.REFLECTOR_B()),
-    deepcopy(Reflectors.REFLECTOR_C()),
+    Reflectors.REFLECTOR_B(),
+    Reflectors.REFLECTOR_C(),
 ]
 
 init_plugboard = [
@@ -44,11 +43,11 @@ def test_enigma_init(rotors, positions, reflector, plugboard):
 
 
 @pytest.mark.parametrize('rotors,positions,reflector,plugboard', [
-    ([deepcopy(Rotors.ROTOR_I())], [0, 3, 4, 5], deepcopy(Reflectors.REFLECTOR_B()),
+    ([Rotors.ROTOR_I()], [0, 3, 4, 5], Reflectors.REFLECTOR_B(),
      init_plugboard[0]),
-    (init_rotors[1]*2, init_positions[0] * 2, deepcopy(Reflectors.REFLECTOR_C()),
+    (init_rotors[1]*2, init_positions[0] * 2, Reflectors.REFLECTOR_C(),
      init_plugboard[0]),
-    (init_rotors[2], init_positions[2], deepcopy(Reflectors.REFLECTOR_C()), 1),
+    (init_rotors[2], init_positions[2], Reflectors.REFLECTOR_C(), 1),
     ])
 def test_enigma_init_ko(rotors, positions, reflector, plugboard):
     with pytest.raises(EnigmaException):
@@ -69,7 +68,7 @@ plugboard,user_input, expected_output', [
      "ELOWX GRCYS UNRWL PJHDL SK".replace(' ', '')),
 ])
 def test_enigma_cipher_constructor_ringstellung(positions, reflector, rotors, plugboard, user_input, expected_output):
-    rotors = deepcopy(rotors)
+    rotors = rotors
     m = Enigma(rotors, positions, reflector, plugboard)
     output = m.cipher(user_input)
     assert output == expected_output
@@ -110,6 +109,18 @@ plugboard,user_input, expected_output', [
     ([25, 0, 0], Reflectors.REFLECTOR_B(), [Rotors.ROTOR_VI(), Rotors.ROTOR_III(), Rotors.ROTOR_II()], 'AAA',
      PlugBoard([]), "himy".replace(' ', ''),
      "QHNG".replace(' ', '')),
+    ([25, 0, 0], Reflectors.REFLECTOR_B_thin(), [Rotors.ROTOR_VI(), Rotors.ROTOR_III(), Rotors.ROTOR_II()], 'AAA',
+     PlugBoard([]), "hello how are you my dear friend im fine glad you asked".replace(' ', ''),
+     "PYWVB XPEDA OMGXW BHWWZ IFVYK OQRQE MDPMI YNATW QFSB".replace(' ', '')),
+    ([25, 0, 0], Reflectors.REFLECTOR_B_thin(), [Rotors.ROTOR_VII(), Rotors.ROTOR_III(), Rotors.ROTOR_II()], 'AAA',
+     PlugBoard([]), "hello how are you my dear friend im fine glad you asked".replace(' ', ''),
+     "NGJOY NMGRF NRCXG IIRUV YXQFI WAZIK MSFUN YJIRT QECO".replace(' ', '')),
+    ([7, 2, 19], Reflectors.REFLECTOR_B_thin(), [Rotors.ROTOR_VI(), Rotors.ROTOR_VII(), Rotors.ROTOR_VIII()], 'XOI',
+     PlugBoard([]), "hello how are you my dear friend im fine glad you asked".replace(' ', ''),
+     "XOWIE KNXZZ ZMCQN GZQPD KNGQQ NVATJ FMQSW IMZXH NCPA".replace(' ', '')),
+    ([7, 2, 19, 23], Reflectors.REFLECTOR_B_thin(), [Rotors.ROTOR_VI(), Rotors.ROTOR_VII(), Rotors.ROTOR_VIII(), Rotors.ROTOR_GAMMA()], 'XOII',
+     PlugBoard([]), "hello how are you my dear friend im fine glad you asked".replace(' ', ''),
+     "PWJBC SEZEL JFEDS KGVXG WDJJF FLOYN IAXKH NPWOR OGYV".replace(' ', '')),
     # Class test
     ([25, 18, 3, 2], Reflectors.REFLECTOR_C_thin(), [Rotors.ROTOR_VIII(), Rotors.ROTOR_VI(), Rotors.ROTOR_V(), Rotors.ROTOR_BETA()], 'LEPE',
      PlugBoard([(0, 4), (1, 5), (2, 12), (3, 16), (7, 20), (9, 13), (11, 23), (15, 17), (18, 25), (21, 22)]),
@@ -117,9 +128,9 @@ plugboard,user_input, expected_output', [
      "KRKRA LLEXX FOLGE NDESI STSOF ORTBE KANNT ZUGEB ENXXI CHHAB EFOLG ELNBE BEFEH LERHA LTENX XJANS TERLE DESBI SHERI GXNRE ICHSM ARSCH ALLSJ GOERI NGJSE TZTDE RFUEH RERSI EYHVR RGRZS SADMI RALYA LSSEI NENNA CHFOL GEREI NXSCH RIFTL SCHEV OLLMA CHTUN TERWE GSXAB SOFOR TSOLL ENSIE SAEMT LICHE MASSN AHMEN VERFU EGENY DIESI CHAUS DERGE GENWA ERTIG ENLAG EERGE BENXG EZXRE ICHSL EITEI KKTUL PEKKJ BORMA NNJXX OBXDX MMMDU RNHFK STXKO MXADM XUUUB OOIEX KP".replace(' ', '')),
 ])
 def test_enigma_cipher_char(positions, reflector, rotors, ringstellung, plugboard, user_input, expected_output):
-    rotors = deepcopy(rotors)
+    rotors = rotors
     for i in range(len(rotors)):
         rotors[i].ringstellung = common.char_to_int(ringstellung[i])
-    m = Enigma(rotors,positions, reflector, plugboard)
+    m = Enigma(rotors, positions, reflector, plugboard)
     output = m.cipher(user_input)
     assert output == expected_output
