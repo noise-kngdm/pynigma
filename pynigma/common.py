@@ -1,4 +1,4 @@
-import constants
+import pynigma.constants as constants
 
 
 def str_to_tuples(str1, str2):

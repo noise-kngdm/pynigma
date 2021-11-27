@@ -1,12 +1,12 @@
 import sys
 import re
 from collections import Counter
-import constants as ct
-import common
-from rotor import Rotor
-from plugboard import PlugBoard
-from reflector import Reflector
-from permutation_block import PermutationBlock
+import pynigma.constants as ct
+import pynigma.common as common
+from pynigma.rotor import Rotor
+from pynigma.plugboard import PlugBoard
+from pynigma.reflector import Reflector
+from pynigma.permutation_block import PermutationBlock
 
 
 class EnigmaException(TypeError):

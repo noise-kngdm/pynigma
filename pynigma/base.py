@@ -1,4 +1,4 @@
-import constants
+import pynigma.constants as constants
 from collections import Counter
 
 

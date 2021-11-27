@@ -1,6 +1,6 @@
-import constants
-import common
-from base import Base
+import pynigma.constants as constants
+import pynigma.common as common
+from pynigma.base import Base
 
 
 class Rotor(Base):

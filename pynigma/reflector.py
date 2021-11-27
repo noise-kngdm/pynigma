@@ -1,6 +1,6 @@
-import common
-import constants
-from base import Base
+import pynigma.common as common
+import pynigma.constants as constants
+from pynigma.base import Base
 
 
 class Reflector(Base):

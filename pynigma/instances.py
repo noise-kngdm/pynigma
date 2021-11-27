@@ -1,7 +1,7 @@
-from rotor import Rotor
-from reflector import Reflector
-from common import char_to_int as cti
-from common import str_to_tuples as strtt
+from pynigma.rotor import Rotor
+from pynigma.reflector import Reflector
+from pynigma.common import char_to_int as cti
+from pynigma.common import str_to_tuples as strtt
 
 
 class Rotors:
