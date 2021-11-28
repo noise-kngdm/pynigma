@@ -116,3 +116,15 @@ class PermutationBlock:
         ciphered_char = self._cipher_stage(char, True)
         ciphered_char = self._reflector.cipher(ciphered_char)
         return self._cipher_stage(ciphered_char, False)
+
+    def set_grundstellung(self, positions):
+        """
+        Set new values of the rotor positions (grundstellung).
+
+        Parameters
+        ----------
+         positions : list[int]
+            List with the position -grundstellung- of each rotor.
+        """
+        self._rotor_positions = positions
+
