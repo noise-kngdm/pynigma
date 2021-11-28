@@ -22,13 +22,9 @@ class PermutationBlock:
         reflector : Reflector
             Reflector used to cipher and decipher a message.
         """
-        if len(rotors) != len(positions):
-            raise ValueError("The len of the rotors and positions lists must "
-                             "be the same.")
-
         self._rotors = rotors
-        for x in positions:
-            common.check_valid_number(x)
+
+        self.check_valid_positions(positions)
         self._rotor_positions = positions
         self._reflector = reflector
 
@@ -126,5 +122,14 @@ class PermutationBlock:
          positions : list[int]
             List with the position -grundstellung- of each rotor.
         """
+        self.check_valid_positions(positions)
         self._rotor_positions = positions
+
+    def check_valid_positions(self, positions):
+        if len(self._rotors) != len(positions):
+            raise ValueError("The len of the rotors and positions lists must "
+                             "be the same.")
+
+        for x in positions:
+            common.check_valid_number(x)
 
