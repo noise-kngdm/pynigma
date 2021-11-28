@@ -1,7 +1,7 @@
-import common
-import constants
-from rotor import Rotor
-from reflector import Reflector
+import pynigma.common as common
+import pynigma.constants as constants
+from pynigma.rotor import Rotor
+from pynigma.reflector import Reflector
 
 
 class PermutationBlock:

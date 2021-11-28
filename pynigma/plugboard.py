@@ -1,7 +1,7 @@
 import sys
-import constants
-import common
-from base import Base
+import pynigma.constants as constants
+import pynigma.common as common
+from pynigma.base import Base
 
 
 class PlugBoard(Base):
@@ -33,7 +33,7 @@ class PlugBoard(Base):
                 raise ValueError('You can only use each character once for '
                                  'each permutation')
 
-    def __init__(self, pairs = []):
+    def __init__(self, pairs=[]):
         """
         Constructor of the PlugBoard class.
 
