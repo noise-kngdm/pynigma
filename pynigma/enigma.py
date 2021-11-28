@@ -101,3 +101,14 @@ class Enigma:
         ciphered_char = self._plugboard.cipher(char)
         ciphered_char = self._permutation_block.cipher(ciphered_char)
         return self._plugboard.cipher(ciphered_char, False)
+
+    def change_grundstellung(self, positions):
+        """
+        Set new values of the rotor positions (grundstellung).
+
+        Parameters
+        ----------
+         positions : list[int]
+            List with the position -grundstellung- of each rotor.
+        """
+        self._permutation_block.set_grundstellung(positions)
