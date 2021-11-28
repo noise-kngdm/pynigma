@@ -2,12 +2,12 @@ import pytest
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import common
-import constants as ct
-import rotor
-from plugboard import PlugBoard
-from enigma import Enigma, EnigmaException
-from instances import Rotors, Reflectors
+import pynigma.common as common
+import pynigma.constants as ct
+import pynigma.rotor as rotor
+from pynigma.plugboard import PlugBoard
+from pynigma.enigma import Enigma, EnigmaException
+from pynigma.instances import Rotors, Reflectors
 
 
 init_rotors = [

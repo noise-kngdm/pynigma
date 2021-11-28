@@ -1,6 +1,6 @@
 import pytest
-from reflector import Reflector
-import constants
+from pynigma.reflector import Reflector
+import pynigma.constants as constants
 
 init_vals = [
     [(x, (x+1) % constants.NUM_CHARS) for x in range(constants.MIN_NUM,
