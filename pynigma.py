@@ -3,7 +3,6 @@
 from sys import exit
 from termcolor import colored
 
-
 import pynigma.constants as ct
 import pynigma.common as common
 from pynigma.instances import Rotors, Reflectors
@@ -12,21 +11,60 @@ from pynigma.plugboard import PlugBoard
 
 
 def red(string, end='\n', bold=False):
+    """
+    Prints a string in red using termcolor.
+
+    Parameters
+    ----------
+    string : str
+        The string that will be printed.
+    end : str
+        The characters sequence that will be written after the string.
+    bold : bool
+        If the string should be printed using a bold style or not.
+    """
     attrs = ['bold'] if bold else []
     print(colored(string, 'red', attrs=attrs), end=end)
 
 
 def magenta(string, end='\n', bold=False):
+    """
+    Prints a string in magenta using termcolor.
+
+    Parameters
+    ----------
+    string : str
+        The string that will be printed.
+    end : str
+        The characters sequence that will be written after the string.
+    bold : bool
+        If the string should be printed using a bold style or not.
+    """
     attrs = ['bold'] if bold else []
     print(colored(string, 'magenta', attrs=attrs), end=end)
 
 
 def blue(string, end='\n', bold=False):
+    """
+    Prints a string in blue using termcolor.
+
+    Parameters
+    ----------
+    string : str
+        The string that will be printed.
+    end : str
+        The characters sequence that will be written after the string.
+    bold : bool
+        If the string should be printed using a bold style or not.
+    """
     attrs = ['bold'] if bold else []
     print(colored(string, 'blue', attrs=attrs), end=end)
 
 
 def print_banner():
+    """
+    Print a banner with information about the program.
+    """
     banner = """
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -47,17 +85,50 @@ Under GPL-v3.0 License.
 
 
 def check_and_abort(option):
+    """
+    Exit the program if needed.
+
+    Parameters
+    ----------
+    options : str
+        The option that will be checked. If its value is 'Q', the
+        program will end its execution.
+    """
     if option == 'Q':
         print("\nSee you next time!")
         exit()
 
 
 def print_options(options):
+    """
+    Print the different items on a dictionary.
+
+    Parameters
+    ----------
+    options : dict
+        The dictionary that will be printed.
+    """
     for k, v in options.items():
         print(f'{k} -> {v[1]}')
 
 
 def choose_option(options, item='next item'):
+    """
+    Return a option chosen by an user after showing a parametrized dialog.
+
+    Parameters
+    ----------
+    options : dict
+        A dictionary that contains what the user should write as key, and, as
+        value, a list with the object chosen in the first position and its
+        description in the second one.
+    item : str
+        String that describes what the user is choosing.
+
+    Returns
+    -------
+        The object chosen by the user.
+    """
     selection = None
     error = False
     while selection not in options:
@@ -81,6 +152,19 @@ def choose_option(options, item='next item'):
 
 
 def choose_rotors(machine):
+    """
+    Return the rotors chosen by the user.
+
+    Parameters
+    ----------
+    machine : int
+        The number of rotors of the machine.
+
+    Returns
+    -------
+    list of function
+        A list with functions that returns the requested Rotors.
+    """
     print('Choose the ', end='')
     red(machine, '')
     print(' rotors. Those rotors will be set from ',
@@ -125,6 +209,19 @@ def choose_rotors(machine):
 
 
 def should_continue(message='Is that correct?'):
+    """
+    Print a Y/N question and return a boolean depending on the answer.
+
+    Parameters
+    ----------
+    message : str
+        Custom message that will be printed.
+
+    Returns
+    -------
+    bool
+        True if 'Y' was chosen, False otherwise.
+    """
     print(f"{message}")
     answer, _ = choose_option({'Y': [True, 'Yes'], 'N': [False, 'No']},
                               'option')
@@ -132,6 +229,19 @@ def should_continue(message='Is that correct?'):
 
 
 def choose_reflector(machine):
+    """
+    Return the reflector chosen by the user.
+
+    Parameters
+    ----------
+    machine : int
+        The number of rotors of the machine.
+
+    Returns
+    -------
+    function
+        Function that returns the chosen reflector.
+    """
     options = {1: [Reflectors.reflector_b, 'UKW-B'],
                2: [Reflectors.reflector_c, 'UKW-C']} if machine == 3 else \
               {1: [Reflectors.reflector_b_thin, 'UKW-B thin'],
@@ -150,6 +260,16 @@ def choose_reflector(machine):
 
 
 def rotors_configuration_ok(conf, machine):
+    """
+    Check that a configuration string has the expected format.
+
+    Parameters
+    ----------
+    conf : str
+        Configuration string that will be checked.
+    machine : int
+        Machine's number of rotors. 
+    """
     for x in conf:
         if x < ct.MIN_CHAR or x > ct.MAX_CHAR:
             return False
@@ -157,6 +277,26 @@ def rotors_configuration_ok(conf, machine):
 
 
 def choose_characters(machine, text):
+    """
+    Return a string containing Enigma configuration parameters.
+
+    It should be used to get the ringstellung or the grundstellung to
+    later create a Enigma instance. It uses the machine version to
+    compute the total lenght that the return value should had.
+
+    Parameters
+    ----------
+    machine : int
+        The machine version that is required, either 3 or 4.
+    text : str
+        The text that should be printed to indicate which parameter
+        the user is configuring.
+
+    Returns
+    -------
+    str
+        The configuration introduced by the user.
+    """
     print(f'Introduce a string of characters with the desired {text}.')
     print('Bear in mind that they will be set in the machine ', end='')
     blue('from left to right.', bold=True)
@@ -176,6 +316,14 @@ def choose_characters(machine, text):
 
 
 def choose_plugboard():
+    """
+    Return a PlugBoard to use with the Enigma machine.
+
+    Returns
+    -------
+    PlugBoard
+        The PlugBoard as it was configured by the user.
+    """
     print('Introduce a string of up to 10 pairs of characters space-separated '
           'to represent the different plugboard patches.')
     plugboard = input().upper()
@@ -209,6 +357,14 @@ def choose_plugboard():
 
 
 def set_machine():
+    """
+    Return a Enigma machine configured with the user requirements.
+
+    Returns
+    -------
+    Enigma
+        The enigma machine configured by the user.
+    """
     options_machine = {3: [3, 'M3, Wehrmacht'], 4: [4, 'M4, Kriegsmarine']}
     machine, _ = choose_option(options_machine, item='machine')
     rotors = choose_rotors(machine)
@@ -229,20 +385,43 @@ def set_machine():
 
 
 def cipher(enigma_machine):
+    """
+    Cipher the text introduced by an user and return its output properly 
+    formated.
+
+    Parameters
+    ----------
+    enigma_machine : Enigma
+        The enigma machine that will be used to cipher the text.
+    """
     text = input("Introduce the text that you want to cipher/decipher: ")
-    if should_continue('Does the text contains redundant information at'
+    if should_continue('\nDoes the text contains redundant information at'
                        ' the beggining and end? If so, it will be '
                        'removed.'):
         text = ''.join(text.split())[8:-8]
+    print()
 
     ciphertext = enigma_machine.cipher(text)
     ciphertext = [ciphertext[i:i+4] for i in range(0, len(ciphertext), 4)]
 
     print("The ciphered text is: ")
-    magenta(f"{' '.join(ciphertext)}")
+    magenta(f"{' '.join(ciphertext)}\n")
 
 
 def change_grundstellung(machine):
+    """
+    Return the new grundstellung set by the user.
+
+    Parameters
+    ----------
+    machine : int
+        Enigma machine model that's being used.
+
+    Returns
+    -------
+    list of int
+        The new grundstellung settings for the machine.
+    """
     if should_continue('Do you want to change the grundstellung?'):
         return [common.char_to_int(x) for
                 x in choose_characters(machine, 'grundstellung')]
@@ -250,6 +429,7 @@ def change_grundstellung(machine):
 
 
 def main():
+    """Main method."""
     print_banner()
     enigma, machine = set_machine()
     while True:
