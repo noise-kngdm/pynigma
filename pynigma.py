@@ -3,6 +3,7 @@
 from sys import exit
 from termcolor import colored
 
+
 import pynigma.constants as ct
 import pynigma.common as common
 from pynigma.instances import Rotors, Reflectors
@@ -84,7 +85,7 @@ def choose_rotors(machine):
     red(machine, '')
     print(' rotors. Those rotors will be set from ',
           end='')
-    blue('right to left', end='', bold=True)
+    blue('left to right', end='', bold=True)
     print(' in the machine.\n')
 
     options = {1: [Rotors.rotor_i, 'Rotor I'],
@@ -110,7 +111,7 @@ def choose_rotors(machine):
         del selected_options[option]
         print()
 
-    print("The selected rotors are, from right to left:")
+    print("The selected rotors are, from left to right:")
     for x, y in selected_rotors:
         blue(options[y][1])
     print()
@@ -158,13 +159,13 @@ def rotors_configuration_ok(conf, machine):
 def choose_characters(machine, text):
     print(f'Introduce a string of characters with the desired {text}.')
     print('Bear in mind that they will be set in the machine ', end='')
-    blue('from right to left.', bold=True)
+    blue('from left to right.', bold=True)
     configuration = input().upper()
     while not rotors_configuration_ok(configuration, machine):
         red(f'Set a proper {text} configuration')
         configuration = input().upper()
 
-    print(f'The selected {text} from right to left is: ', end='')
+    print(f'The selected {text} from left to right is: ', end='')
     blue(f'{configuration}\n')
 
     if should_continue():
@@ -198,8 +199,13 @@ def choose_plugboard():
         red(f"There was an error while creating the Plugboard: {e}")
         return choose_plugboard()
     else:
-        print()
-        return ret
+        print('The selected plugboard is: ', end='')
+        blue(f'{plugboard}')
+        if should_continue():
+            print()
+            return ret
+        else:
+            return choose_plugboard()
 
 
 def set_machine():
@@ -227,7 +233,7 @@ def cipher(enigma_machine):
     if should_continue('Does the text contains redundant information at'
                        ' the beggining and end? If so, it will be '
                        'removed.'):
-        text = text[8:-8]
+        text = ''.join(text.split())[8:-8]
 
     ciphertext = enigma_machine.cipher(text)
     ciphertext = [ciphertext[i:i+4] for i in range(0, len(ciphertext), 4)]

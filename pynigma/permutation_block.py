@@ -22,10 +22,10 @@ class PermutationBlock:
         reflector : Reflector
             Reflector used to cipher and decipher a message.
         """
-        self._rotors = rotors
+        self._rotors = rotors[::-1]
 
         self.check_valid_positions(positions)
-        self._rotor_positions = positions
+        self._rotor_positions = positions[::-1]
         self._reflector = reflector
 
     def _rotate_rotor(self, index: int):
@@ -58,7 +58,6 @@ class PermutationBlock:
         int
             The result of ciphering the input in this stage.
         """
-        # The first rotor must always be rotated in the forward stage
         cipher_char = char
         order = range(len(self._rotors))
         order = order if forward else reversed(order)
@@ -123,7 +122,7 @@ class PermutationBlock:
             List with the position -grundstellung- of each rotor.
         """
         self.check_valid_positions(positions)
-        self._rotor_positions = positions
+        self._rotor_positions = positions[::-1]
 
     def check_valid_positions(self, positions):
         """
@@ -140,4 +139,3 @@ class PermutationBlock:
 
         for x in positions:
             common.check_valid_number(x)
-
