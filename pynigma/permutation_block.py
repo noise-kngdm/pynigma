@@ -126,6 +126,14 @@ class PermutationBlock:
         self._rotor_positions = positions
 
     def check_valid_positions(self, positions):
+        """
+        Check if values of the rotor positions are valids (grundstellung).
+
+        Parameters
+        ----------
+         positions : list[int]
+            List with the position -grundstellung- of each rotor.
+        """
         if len(self._rotors) != len(positions):
             raise ValueError("The len of the rotors and positions lists must "
                              "be the same.")
