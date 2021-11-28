@@ -184,11 +184,13 @@ def choose_rotors(machine):
     m4_options = {9:  [Rotors.rotor_beta, 'Rotor BETA'],
                   10: [Rotors.rotor_gamma, 'Rotor GAMMA']}
 
+    selected_options = options.copy()
+    selected_rotors = []
     if machine == 4:
         options.update(m4_options)
-    selected_options = options.copy()
+        choice, option = choose_option(m4_options, 'next rotor')
+        selected_rotors.append((choice, option))
 
-    selected_rotors = []
     while len(selected_rotors) != machine:
         choice, option = choose_option(selected_options, 'next rotor')
         selected_rotors.append((choice, option))
@@ -386,7 +388,7 @@ def set_machine():
 
 def cipher(enigma_machine):
     """
-    Cipher the text introduced by an user and return its output properly 
+    Cipher the text introduced by an user and return its output properly
     formated.
 
     Parameters
