@@ -1,4 +1,3 @@
-import sys
 import re
 from collections import Counter
 import pynigma.constants as ct
@@ -102,13 +101,23 @@ class Enigma:
         ciphered_char = self._permutation_block.cipher(ciphered_char)
         return self._plugboard.cipher(ciphered_char, False)
 
-    def change_grundstellung(self, positions):
+    @property
+    def grundstellung(self):
         """
-        Set new values of the rotor positions (grundstellung).
+        The grundstellung of the machine.
 
         Parameters
         ----------
-         positions : list[int]
-            List with the position -grundstellung- of each rotor.
+        grundstellung : list of int
+            The grundstellung that will be set.
+
+        Returns
+        -------
+        list of int
+            The grundstellung of the machine.
         """
-        self._permutation_block.set_grundstellung(positions)
+        return self._permutation_block.grundstellung
+
+    @grundstellung.setter
+    def grundstellung(self, grundstellung: list[int]):
+        self._permutation_block.grundstellung = grundstellung

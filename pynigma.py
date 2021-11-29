@@ -441,7 +441,7 @@ def main():
             break
 
         if grundstellung := change_grundstellung(machine):
-            enigma.change_grundstellung(grundstellung)
+            enigma.grundstellung = grundstellung
 
     magenta('See you soon!!\n', bold=True)
 

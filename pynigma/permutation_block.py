@@ -40,6 +40,28 @@ class PermutationBlock:
         self._rotor_positions[index] = (self._rotor_positions[index] + 1) \
             % constants.NUM_CHARS
 
+    @property
+    def grundstellung(self):
+        """
+        The grundstellung of the machine.
+
+        Parameters
+        ----------
+        grundstellung : list of int
+            The grundstellung that will be set.
+
+        Returns
+        -------
+        list of int
+            The grundstellung of the machine.
+        """
+        return self._rotor_positions[::-1]
+
+    @grundstellung.setter
+    def grundstellung(self, grundstellung: list[int]):
+        self.check_valid_positions(grundstellung)
+        self._rotor_positions = grundstellung[::-1]
+
     def _cipher_stage(self, char: int, forward: bool = False) -> int:
         """
         Method that performs a sequence of ciphers from one end of the rotor
@@ -111,18 +133,6 @@ class PermutationBlock:
         ciphered_char = self._cipher_stage(char, True)
         ciphered_char = self._reflector.cipher(ciphered_char)
         return self._cipher_stage(ciphered_char, False)
-
-    def set_grundstellung(self, positions):
-        """
-        Set new values of the rotor positions (grundstellung).
-
-        Parameters
-        ----------
-         positions : list[int]
-            List with the position -grundstellung- of each rotor.
-        """
-        self.check_valid_positions(positions)
-        self._rotor_positions = positions[::-1]
 
     def check_valid_positions(self, positions):
         """
