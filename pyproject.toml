@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pynigma"
-version = "0.1.0"
+version = "v1.1.0"
 description = "Python implementation of the enigma machine."
 authors = ["Gonzalo Abril, Luis Javier Soriano"]
 license = "GPL v3.0"
